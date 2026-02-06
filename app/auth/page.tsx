@@ -5,8 +5,8 @@ import { redirect } from "next/navigation";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 
 export const metadata = {
-  title: "Sign In - OpenChat",
-  description: "Sign in to OpenChat to get AI-powered assistance",
+  title: "Sign In - Tool Calling Assistant",
+  description: "Sign in to Tool Calling Assistant",
 };
 
 export default async function AuthPage() {

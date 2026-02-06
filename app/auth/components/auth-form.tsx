@@ -40,7 +40,7 @@ export function AuthForm() {
             Welcome back
           </CardTitle>
           <CardDescription className="text-center text-base">
-            Sign in to continue to OpenChat
+            Sign in to continue to Tool Calling Assistant
           </CardDescription>
         </CardHeader>
 
@@ -75,8 +75,8 @@ export function AuthForm() {
           {/* Footer Text */}
           <div className="space-y-4 text-center">
             <p className="text-xs text-muted-foreground leading-relaxed">
-              By continuing, you agree to OpenChat&apos;s Terms of Service and
-              Privacy Policy.
+              By continuing, you agree to Tool Calling Assistant&apos;s Terms of
+              Service and Privacy Policy.
             </p>
             <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
               <ShieldCheck className="size-3.5" />
