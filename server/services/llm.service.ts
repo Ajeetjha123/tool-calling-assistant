@@ -27,7 +27,7 @@ export class LLMService {
     const apiKey = process.env[LLM_CONFIG.apiKeyRequired];
     if (!apiKey) {
       throw new Error(
-        `Missing ${LLM_CONFIG.name} API key. Please set ${LLM_CONFIG.apiKeyRequired} environment variable.`
+        `Missing ${LLM_CONFIG.name} API key. Please set ${LLM_CONFIG.apiKeyRequired} environment variable.`,
       );
     }
   }

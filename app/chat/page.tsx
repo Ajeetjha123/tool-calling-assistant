@@ -6,13 +6,13 @@ import { type Message } from "../../common/components/sidebar/components/message
 import { Loader2 } from "lucide-react";
 import { addNewSession } from "../../common/components/sidebar/components/chat-sidebar";
 import { handleStreamingResponse } from "../../common/lib/utils";
-import { useAuth } from "@/auth/hooks";
 import NextImage from "next/image";
 import { IMAGES } from "@/common/constant/images";
 import { useRouter, useSearchParams } from "next/navigation";
 import { WelcomeScreen } from "./components/welcome-screen";
 import { ChatConversation } from "./components/chat-conversation";
 import { toast } from "sonner";
+import { useAuth } from "../auth/hooks";
 
 function ChatPageContent() {
   const { user } = useAuth();
@@ -94,7 +94,7 @@ function ChatPageContent() {
               return { ...msg, id: result.aiMessageId };
             }
             return msg;
-          })
+          }),
         );
       }
     } catch (error) {
@@ -186,7 +186,7 @@ function ChatPageContent() {
             window.history.replaceState(
               null,
               "",
-              `/chat/${metadata.sessionId}`
+              `/chat/${metadata.sessionId}`,
             );
 
             addNewSession({
@@ -202,8 +202,8 @@ function ChatPageContent() {
             prev.map((msg) =>
               msg.id === userMessage.id
                 ? { ...msg, id: metadata.userMessageId }
-                : msg
-            )
+                : msg,
+            ),
           );
         },
         (text) => {
@@ -218,8 +218,8 @@ function ChatPageContent() {
               prev.map((msg) =>
                 msg.id === aiMessageId
                   ? { ...msg, content: aiMessageContent }
-                  : msg
-              )
+                  : msg,
+              ),
             );
           });
         },
@@ -228,14 +228,14 @@ function ChatPageContent() {
             prev.map((msg) =>
               msg.id === aiMessageId
                 ? { ...msg, id: aiMessageIdFromServer }
-                : msg
-            )
+                : msg,
+            ),
           );
 
           setIsStreaming(false);
           currentStreamDataRef.current = null;
           abortControllerRef.current = null;
-        }
+        },
       );
     } catch (error) {
       if ((error as Error).name === "AbortError") {

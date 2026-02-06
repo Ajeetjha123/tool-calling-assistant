@@ -10,7 +10,7 @@ import {
 import { useParams, useRouter } from "next/navigation";
 import { Loader2, AlertCircle } from "lucide-react";
 import { handleStreamingResponse } from "../../../common/lib/utils";
-import { useAuth } from "@/auth/hooks";
+import { useAuth } from "@/app/auth/hooks";
 
 // API response types
 interface GetMessagesResponse {
@@ -70,9 +70,12 @@ export default function ChatDetailPage() {
           // Wait a bit and retry for new sessions
           if (retryCount < 3) {
             console.log(`Session not found, retrying in ${retryCount + 1}s...`);
-            setTimeout(() => {
-              loadConversationHistory(retryCount + 1);
-            }, 1000 * (retryCount + 1)); // 1s, 2s, 3s delays
+            setTimeout(
+              () => {
+                loadConversationHistory(retryCount + 1);
+              },
+              1000 * (retryCount + 1),
+            ); // 1s, 2s, 3s delays
             return;
           }
           setError("Chat session not found");
@@ -104,22 +107,27 @@ export default function ChatDetailPage() {
             (error as Error).message.includes("fetch"))
         ) {
           console.log(
-            `Network error, retrying in ${(retryCount + 1) * 500}ms...`
+            `Network error, retrying in ${(retryCount + 1) * 500}ms...`,
           );
-          setTimeout(() => {
-            loadConversationHistory(retryCount + 1);
-          }, 500 * (retryCount + 1));
+          setTimeout(
+            () => {
+              loadConversationHistory(retryCount + 1);
+            },
+            500 * (retryCount + 1),
+          );
           return;
         }
 
         setError(
-          error instanceof Error ? error.message : "Failed to load conversation"
+          error instanceof Error
+            ? error.message
+            : "Failed to load conversation",
         );
       } finally {
         setIsLoadingHistory(false);
       }
     },
-    [sessionId]
+    [sessionId],
   );
 
   // Cleanup on unmount
@@ -173,7 +181,7 @@ export default function ChatDetailPage() {
               return { ...msg, id: result.aiMessageId };
             }
             return msg;
-          })
+          }),
         );
       }
     } catch (error) {
@@ -259,8 +267,8 @@ export default function ChatDetailPage() {
             prev.map((msg) =>
               msg.id === userMessage.id
                 ? { ...msg, id: metadata.userMessageId }
-                : msg
-            )
+                : msg,
+            ),
           );
         },
         (text) => {
@@ -278,8 +286,8 @@ export default function ChatDetailPage() {
               prev.map((msg) =>
                 msg.id === aiMessageId
                   ? { ...msg, content: aiMessageContent }
-                  : msg
-              )
+                  : msg,
+              ),
             );
           });
         },
@@ -289,15 +297,15 @@ export default function ChatDetailPage() {
             prev.map((msg) =>
               msg.id === aiMessageId
                 ? { ...msg, id: aiMessageIdFromServer }
-                : msg
-            )
+                : msg,
+            ),
           );
 
           // Streaming complete - clean up
           setIsStreaming(false);
           currentStreamDataRef.current = null;
           abortControllerRef.current = null;
-        }
+        },
       );
     } catch (error) {
       // Check if this is an abort error (user stopped streaming)
@@ -312,7 +320,7 @@ export default function ChatDetailPage() {
       setMessages((prev) => prev.filter((msg) => !msg.id.startsWith("temp-")));
 
       setError(
-        error instanceof Error ? error.message : "Failed to send message"
+        error instanceof Error ? error.message : "Failed to send message",
       );
     } finally {
       setIsLoading(false);

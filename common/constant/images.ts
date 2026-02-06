@@ -1,4 +1,3 @@
 export const IMAGES = {
-  logo: "/logo.png",
+  logo: "/logo.webp",
 } as const;
-
