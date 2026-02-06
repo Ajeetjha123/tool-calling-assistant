@@ -83,7 +83,7 @@ export function ChatInput({
               "h-8 w-8 rounded-full shrink-0 transition-all",
               message.trim() && !disabled
                 ? "bg-linear-to-br from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700 text-white shadow-md hover:shadow-lg"
-                : "bg-muted text-muted-foreground hover:bg-muted/80"
+                : "bg-muted text-muted-foreground hover:bg-muted/80",
             )}
           >
             <Send className="h-4 w-4" />
@@ -91,7 +91,8 @@ export function ChatInput({
         )}
       </div>
       <p className="text-xs text-muted-foreground/80 text-center mt-3">
-        OpenChat can make mistakes. Consider checking important information.
+        Tool Calling Assistant can make mistakes. Consider checking important
+        information.
       </p>
     </div>
   );

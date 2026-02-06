@@ -1,6 +1,6 @@
 "use client";
 
-import { Plus, MessageSquare, Sparkles, PanelLeft } from "lucide-react";
+import { Plus, MessageSquare, PanelLeft } from "lucide-react";
 import { Button } from "@/common/components/ui/button";
 import { ScrollArea } from "@/common/components/ui/scroll-area";
 import { cn } from "@/common/lib/utils";
@@ -22,7 +22,6 @@ interface ChatSidebarDesktopProps {
   onToggleCollapse: () => void;
   onChatClick: (sessionId: string) => void;
   loading?: boolean;
-  hasMore?: boolean;
   lastSessionRef?: React.RefObject<HTMLButtonElement | null>;
 }
 
@@ -35,19 +34,20 @@ export function ChatSidebarDesktop({
   loading = false,
   lastSessionRef,
 }: ChatSidebarDesktopProps) {
+  /* COLLAPSED SIDEBAR */
   if (isCollapsed) {
     return (
       <aside
         className={cn(
-          "hidden md:flex flex-col bg-background border-r border-border/50 h-screen sticky top-0 shrink-0 transition-all duration-300 ease-in-out",
-          "w-16"
+          "hidden md:flex flex-col bg-white/80 backdrop-blur-xl border-r border-purple-200 h-screen sticky top-0 shrink-0 transition-all duration-300 ease-in-out",
+          "w-16",
         )}
       >
         <div
           className="relative p-3 flex justify-center group cursor-pointer"
           onClick={onToggleCollapse}
         >
-          <div className="w-9 h-9 rounded-md bg-linear-to-br from-teal-500 to-teal-600 flex items-center justify-center shadow-sm">
+          <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-purple-500 via-pink-500 to-orange-400 flex items-center justify-center shadow-md">
             <NextImage
               src={IMAGES.logo}
               alt="Logo"
@@ -56,8 +56,9 @@ export function ChatSidebarDesktop({
               className="size-full object-contain rounded-lg"
             />
           </div>
-          <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-background/95 rounded-md">
-            <PanelLeft className="w-5 h-5 text-foreground" />
+
+          <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-white/90 rounded-lg">
+            <PanelLeft className="w-5 h-5 text-purple-600" />
           </div>
         </div>
 
@@ -66,32 +67,32 @@ export function ChatSidebarDesktop({
             <Button
               variant="ghost"
               size="icon"
-              className="w-full h-10 bg-accent/80 hover:bg-accent/90 cursor-pointer transition-colors"
+              className="w-full h-10 bg-purple-100 hover:bg-purple-200 transition-colors"
             >
-              <Plus className="h-5 w-5" />
+              <Plus className="h-5 w-5 text-purple-600" />
             </Button>
           </Link>
         </div>
 
-        <div className="mt-auto p-3 flex justify-center cursor-pointer">
+        <div className="mt-auto p-3 flex justify-center">
           <UserProfile isCollapsed={true} />
         </div>
       </aside>
     );
   }
 
+  /* FULL SIDEBAR */
   return (
     <aside
       className={cn(
-        "hidden md:flex flex-col bg-background border-r border-border/50 h-screen sticky top-0 shrink-0 transition-all duration-300 ease-in-out",
-        "w-64"
+        "hidden md:flex flex-col bg-white/80 backdrop-blur-xl border-r border-purple-200 h-screen sticky top-0 shrink-0 transition-all duration-300 ease-in-out",
+        "w-64",
       )}
     >
-      {/* Header Section */}
+      {/* Header */}
       <div className="flex flex-col gap-2 p-3">
-        {/* Brand with Close Button */}
         <div className="flex items-center gap-2.5 px-2 py-1.5 mb-2">
-          <div className="w-7 h-7 rounded-md bg-linear-to-br from-teal-500 to-teal-600 flex items-center justify-center shadow-sm">
+          <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-purple-500 via-pink-500 to-orange-400 flex items-center justify-center shadow-md">
             <NextImage
               src={IMAGES.logo}
               alt="Logo"
@@ -100,40 +101,43 @@ export function ChatSidebarDesktop({
               className="size-full object-contain rounded-lg"
             />
           </div>
-          <span className="font-semibold text-base tracking-tight flex-1">
-            OpenChat
+
+          <span className="font-semibold text-base tracking-tight flex-1 text-gray-900">
+            Tool Calling Assistant
           </span>
+
           <Button
             variant="ghost"
             size="icon"
-            className="h-7 w-7 hover:bg-accent cursor-pointer"
+            className="h-7 w-7 hover:bg-purple-100"
             onClick={onToggleCollapse}
           >
-            <PanelLeft className="h-4 w-4 rotate-180" />
+            <PanelLeft className="h-4 w-4 rotate-180 text-purple-600" />
           </Button>
         </div>
 
-        {/* New Chat Button */}
+        {/* New Chat */}
         <Link href="/chat?new=true">
           <Button
             variant="ghost"
-            className="w-full justify-start gap-2.5 h-9 px-3 hover:bg-accent/80 transition-colors cursor-pointer"
+            className="w-full justify-start gap-2.5 h-9 px-3 hover:bg-purple-50 transition-colors"
           >
-            <Plus className="h-4 w-4" />
-            <span className="text-sm font-medium">New Chat</span>
+            <Plus className="h-4 w-4 text-purple-600" />
+            <span className="text-sm font-medium text-gray-800">New Chat</span>
           </Button>
         </Link>
       </div>
 
-      {/* Chat History Section */}
+      {/* Chat List */}
       <div className="flex-1 overflow-hidden min-h-0">
         <div className="px-3 py-3">
-          <h2 className="text-xs font-semibold text-muted-foreground px-2 uppercase tracking-wide">
+          <h2 className="text-xs font-semibold text-purple-400 px-2 uppercase tracking-wide">
             Your chats
           </h2>
         </div>
+
         <ScrollArea className="flex-1 px-2 pb-4 h-full">
-          <div className="space-y-0.5 px-1 min-h-0 mb-8 cursor-pointer">
+          <div className="space-y-0.5 px-1 min-h-0 mb-8">
             {chats.map((chat, index) => (
               <button
                 key={chat.id}
@@ -143,11 +147,12 @@ export function ChatSidebarDesktop({
                   "w-full rounded-lg px-3 py-2.5 text-left transition-all",
                   "group relative flex items-center gap-2.5 text-sm",
                   isActive(chat.id)
-                    ? "bg-accent text-foreground"
-                    : "hover:bg-accent/60 text-foreground/90 hover:text-foreground"
+                    ? "bg-purple-100 text-purple-700 shadow-sm"
+                    : "hover:bg-purple-50 text-gray-700 hover:text-gray-900",
                 )}
               >
                 <MessageSquare className="h-4 w-4 shrink-0 opacity-70" />
+
                 <span className="line-clamp-1 flex-1 font-normal truncate">
                   {chat.title.length > 23
                     ? `${chat.title.substring(0, 23)}...`
@@ -155,8 +160,9 @@ export function ChatSidebarDesktop({
                 </span>
               </button>
             ))}
+
             {loading && (
-              <div className="px-3 py-2 text-sm text-muted-foreground">
+              <div className="px-3 py-2 text-sm text-purple-400">
                 Loading more chats...
               </div>
             )}
@@ -164,8 +170,8 @@ export function ChatSidebarDesktop({
         </ScrollArea>
       </div>
 
-      {/* User Profile at Bottom */}
-      <div className="border-t border-border/50 p-3">
+      {/* User */}
+      <div className="border-t border-purple-200 p-3">
         <UserProfile isCollapsed={false} />
       </div>
     </aside>

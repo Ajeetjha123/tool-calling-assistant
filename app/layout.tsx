@@ -11,9 +11,9 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "OpenChat - AI-Powered Assistant",
+  title: "Tool Calling Assistant",
   description:
-    "Get instant answers, creative solutions, and intelligent assistance with OpenChat",
+    "Get instant answers, creative solutions, and intelligent assistance with Tool Calling Assistant",
 };
 
 export default function RootLayout({

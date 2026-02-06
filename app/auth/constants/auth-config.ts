@@ -16,8 +16,8 @@ export const AUTH_PROVIDERS = [
 ] as const;
 
 export const BRAND_CONFIG = {
-  name: "OpenChat",
+  name: "Tool Calling Assistant",
   tagline: "Your AI-powered assistant for real-time help",
-  description: "Get instant answers, creative solutions, and intelligent assistance - just like ChatGPT, but better.",
+  description:
+    "Get instant answers, creative solutions, and intelligent assistance - just like ChatGPT, but better.",
 } as const;
-
